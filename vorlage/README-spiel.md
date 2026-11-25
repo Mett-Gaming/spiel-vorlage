@@ -12,6 +12,7 @@ Läuft auf der eigenen Rust/Vulkan-Engine [Mettgine](https://github.com/Mett-Gam
 ## Bauen und starten
 ```powershell
 git clone --recurse-submodules https://github.com/Mett-Gaming/meinspiel
+cd meinspiel
 git -C mettgine checkout main
 cargo run --release
 cargo test --release
