@@ -46,7 +46,9 @@ if ($known) {
     Invoke-Git submodule update --init mettgine
 } else {
     if (Test-Path 'mettgine') { Remove-Item 'mettgine' -Recurse -Force }
-    Invoke-Git rm -q -f --ignore-unmatch .gitmodules
+    # die Datei bleibt (git verlangt sie), nur der alte Abschnitt geht
+    [System.IO.File]::WriteAllText((Join-Path $PSScriptRoot '.gitmodules'), '')
+    Invoke-Git add .gitmodules
     Invoke-Git submodule add -b main https://github.com/Mett-Gaming/mettgine.git mettgine
     Invoke-Git config -f .gitmodules submodule.mettgine.update merge
 }
