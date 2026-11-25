@@ -1,0 +1,3 @@
+# C-Laufzeit statisch einbinden: die Exe laeuft ohne Visual-C++-Redistributable
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "target-feature=+crt-static"]

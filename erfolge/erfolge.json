@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "achievements": [
+    { "id": "erster_ring", "name": "Aller Anfang", "text": "Sammle deinen ersten Ring." },
+    { "id": "geschafft", "name": "Geschafft", "text": "Sammle in einer Runde alle Ringe." },
+    { "id": "ringsammler", "name": "Ringsammler", "text": "Sammle insgesamt 100 Ringe.", "goal": 100 }
+  ]
+}

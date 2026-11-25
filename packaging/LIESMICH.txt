@@ -1,0 +1,22 @@
+MEIN SPIEL
+==========
+Sammle alle Ringe, bevor die Zeit um ist.
+
+STARTEN
+  MEINSPIEL.exe doppelklicken. Keine Installation nötig.
+  Voraussetzungen: Windows 10/11 (64 Bit) und eine Grafikkarte mit Vulkan 1.3
+  und aktuellem Treiber.
+  Windows SmartScreen warnt eventuell, weil die Datei nicht signiert ist:
+  "Weitere Informationen" -> "Trotzdem ausführen".
+
+STEUERUNG
+  WASD, Pfeile oder linker Stick   bewegen
+  Esc oder Start                   Pause
+  F11                              Vollbild
+
+EINSTELLUNGEN
+  Liegen in %APPDATA%\.mettlauncher\meinspiel (nicht neben der exe),
+  ebenso Protokoll und Absturzberichte.
+
+CREDITS
+  Siehe Credits.md. Schrift: Archivo Black (Lizenzen\).

@@ -1,0 +1,14 @@
+{
+  "id": "meinspiel",
+  "name": "MEIN SPIEL",
+  "repo": "Mett-Gaming/meinspiel",
+  "tagline": "Ein Satz, worum es geht",
+  "cover": "covers/meinspiel.png",
+  "hero": "covers/meinspiel-hero.png",
+  "assetPattern": "^MEINSPIEL-v.*\\.zip$",
+  "stripTopFolder": true,
+  "exe": "MEINSPIEL.exe",
+  "args": [],
+  "preserve": [],
+  "includePrereleases": false
+}

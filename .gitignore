@@ -1,0 +1,13 @@
+# Bau-Ausgaben
+/target/
+/dist/
+
+# Original-Packs und Downloads (Quellen siehe CREDITS.md)
+/assets_src/
+
+# Bildschirmfotos und Editor-Reste
+/shots*/
+*.bmp
+.vs/
+.vscode/
+.idea/

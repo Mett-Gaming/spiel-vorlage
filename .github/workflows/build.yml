@@ -1,0 +1,19 @@
+# Baut MEIN SPIEL bei jedem Hochladen und jeder Übernahmeanfrage. Eine Marke "v*" erzeugt zusätzlich
+# eine Veröffentlichung. Der Ablauf selbst liegt in der Engine (mettgine/docs/pakete.md).
+name: Build
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  spiel:
+    uses: Mett-Gaming/mettgine/.github/workflows/spiel.yml@v0.22.0
+    with:
+      titel: "MEIN SPIEL"

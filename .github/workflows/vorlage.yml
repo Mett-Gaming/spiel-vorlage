@@ -1,0 +1,37 @@
+# Nur in der Vorlage selbst: richtet ein Probespiel ein und baut es. Das Einrichten löscht diese Datei.
+name: Vorlage prüfen
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probespiel:
+    if: github.repository == 'Mett-Gaming/spiel-vorlage'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Einrichten
+        shell: cmd
+        run: powershell -NoProfile -ExecutionPolicy Bypass -File einrichten.ps1 -Titel "Probe Größe 1" -Id probespiel
+      - name: Nichts übersehen
+        shell: bash
+        run: |
+          if grep -rnI "MEINSPIEL\|meinspiel\|MEIN SPIEL" . --exclude-dir=.git --exclude-dir=mettgine --exclude-dir=target; then
+            echo "Platzhalter übrig"; exit 1
+          fi
+          test ! -e einrichten.ps1 && test ! -e vorlage
+      - name: Prüfen, testen, packen
+        run: |
+          cargo run --release -q -p mettpack -- pruefen
+          cargo test --release -p probespiel
+          cargo run --release -q -p mettpack -- packen --version v0.0.1

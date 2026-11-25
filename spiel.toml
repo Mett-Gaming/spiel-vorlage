@@ -1,0 +1,18 @@
+# Was ausgeliefert wird. Packen: cargo run --release -p mettpack -- packen
+# Anleitung: mettgine/docs/pakete.md
+name = "MEINSPIEL"
+package = "meinspiel"
+exe = "MEINSPIEL.exe"
+ausgelassen = ["fonts/OFL.txt"]
+
+[daten]
+schriften = ["fonts/*.ttf"]
+
+[schriften]
+"fonts/ArchivoBlack-Regular.ttf" = "Lizenzen/ArchivoBlack-OFL.txt"
+
+[beilagen]
+"LIESMICH.txt" = "packaging/LIESMICH.txt"
+"Credits.md" = "CREDITS.md"
+"Lizenzen/ArchivoBlack-OFL.txt" = "assets/fonts/OFL.txt"
+erfolge = "erfolge"

@@ -1,0 +1,5 @@
+[submodule "mettgine"]
+	path = mettgine
+	url = https://github.com/Mett-Gaming/mettgine.git
+	branch = main
+	update = merge
