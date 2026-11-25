@@ -1,7 +1,7 @@
 //! Fenster, Menues, Eingabe und Bild. Die Regeln stehen in `game`.
 
 use crate::game::{
-    Event as GameEvent, Game as Round, Input, Outcome, FIELD, RADIUS, RING_RADIUS, STEP,
+    Event as GameEvent, Game as Round, Input, Outcome, COIN_RADIUS, FIELD, RADIUS, STEP,
 };
 use crate::settings::Settings;
 use crate::sounds::Sounds;
@@ -45,7 +45,7 @@ const FULLSCREEN: &[Bind] = &[Bind::Key(Key::F11)];
 /// Modelle in der Reihenfolge von `renderer`
 const CUBE: usize = 0;
 const BALL: usize = 1;
-const RING: usize = 2;
+const COIN: usize = 2;
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 enum Screen {
@@ -206,9 +206,9 @@ impl App {
             for e in self.round.update(&input) {
                 self.sounds.play(e);
                 achievements::on_event(&stage.achievements, e);
-                if e == GameEvent::Ring {
-                    self.settings.total_rings += 1;
-                    achievements::totals(&stage.achievements, self.settings.total_rings);
+                if e == GameEvent::Coin {
+                    self.settings.total_coins += 1;
+                    achievements::totals(&stage.achievements, self.settings.total_coins);
                     stage.input.rumble(0.3, 60);
                 }
             }
@@ -230,7 +230,7 @@ impl App {
                 Screen::Paused => ("PAUSE", ""),
                 Screen::End => ("FERTIG", hud::result(self.round.outcome)),
                 Screen::Options => ("OPTIONEN", ""),
-                _ => (TITLE, "Sammle alle Ringe, bevor die Zeit um ist."),
+                _ => (TITLE, "Sammle alle Münzen, bevor die Zeit um ist."),
             };
             hud::menu_head(c, title, below);
             hud::version(c);
@@ -258,7 +258,7 @@ fn at(p: Vec2, y: f32) -> Mat4 {
     Mat4::from_translation(vec3(p.x, y, p.y))
 }
 
-/// Spielfeld, Kugel und Ringe.
+/// Spielfeld, Kugel und Münzen.
 fn scene(g: &Round, time: f32) -> Vec<MeshDraw> {
     let mut out = vec![
         MeshDraw::new(
@@ -273,11 +273,11 @@ fn scene(g: &Round, time: f32) -> Vec<MeshDraw> {
         )
         .tint(vec3(0.9, 0.35, 0.3)),
     ];
-    out.extend(g.rings.iter().enumerate().map(|(i, r)| {
+    out.extend(g.coins.iter().enumerate().map(|(i, r)| {
         let spin = Mat4::from_rotation_y(time * 2.0 + i as f32)
             * Mat4::from_rotation_z(std::f32::consts::FRAC_PI_2);
-        let size = vec3(RING_RADIUS, 0.12, RING_RADIUS);
-        MeshDraw::new(RING, at(*r, 0.6) * spin * Mat4::from_scale(size))
+        let size = vec3(COIN_RADIUS, 0.12, COIN_RADIUS);
+        MeshDraw::new(COIN, at(*r, 0.6) * spin * Mat4::from_scale(size))
             .tint(vec3(1.0, 0.8, 0.25))
             .glow(0.25)
     }));
@@ -305,7 +305,7 @@ impl Game for App {
     fn ready(&mut self, stage: &mut Stage) {
         stage.renderer.set_msaa(4);
         self.apply(stage);
-        achievements::totals(&stage.achievements, self.settings.total_rings);
+        achievements::totals(&stage.achievements, self.settings.total_coins);
     }
 
     fn frame(&mut self, stage: &mut Stage, dt: f32) {
@@ -337,8 +337,8 @@ impl Game for App {
     fn status(&self) -> Option<Status> {
         Some(match self.screen {
             Screen::Playing | Screen::Paused => Status::new(
-                "Sammelt Ringe",
-                format!("{} von {}", self.round.collected, crate::game::RINGS),
+                "Sammelt Münzen",
+                format!("{} von {}", self.round.collected, crate::game::COINS),
             ),
             _ => Status::new("Im Menü", ""),
         })
@@ -365,6 +365,6 @@ mod tests {
     #[test]
     fn the_scene_shows_every_ring() {
         let g = Round::new(3);
-        assert_eq!(scene(&g, 0.0).len(), 2 + g.rings.len());
+        assert_eq!(scene(&g, 0.0).len(), 2 + g.coins.len());
     }
 }

@@ -7,7 +7,7 @@ use mettgine::audio::{Audio, Sound};
 
 pub struct Sounds {
     audio: Audio,
-    ring: Sound,
+    coin: Sound,
     won: Sound,
     lost: Sound,
     click: Sound,
@@ -30,10 +30,10 @@ fn all() -> [Sound; 4] {
 
 impl Sounds {
     pub fn new(volume: f32) -> Self {
-        let [ring, won, lost, click] = all();
+        let [coin, won, lost, click] = all();
         Self {
             audio: Audio::new(volume, 1.0),
-            ring,
+            coin,
             won,
             lost,
             click,
@@ -46,7 +46,7 @@ impl Sounds {
 
     pub fn play(&mut self, e: Event) {
         let s = match e {
-            Event::Ring => &self.ring,
+            Event::Coin => &self.coin,
             Event::Won => &self.won,
             Event::Lost => &self.lost,
         };

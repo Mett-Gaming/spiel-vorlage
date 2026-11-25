@@ -13,8 +13,8 @@ pub struct Settings {
     pub fullscreen: bool,
     /// Weniger Verzoegerung (Reflex, Anti-Lag)
     pub low_latency: bool,
-    /// Ringe ueber alle Runden (Erfolg "ringsammler")
-    pub total_rings: u32,
+    /// Münzen ueber alle Runden (Erfolg "muenzsammler")
+    pub total_coins: u32,
 }
 
 impl Default for Settings {
@@ -23,7 +23,7 @@ impl Default for Settings {
             volume: 0.8,
             fullscreen: true,
             low_latency: true,
-            total_rings: 0,
+            total_coins: 0,
         }
     }
 }
@@ -35,7 +35,7 @@ impl Settings {
             volume: kv.f32("volume", d.volume, 0.0, 1.0),
             fullscreen: kv.bool("fullscreen", d.fullscreen),
             low_latency: kv.bool("low_latency", d.low_latency),
-            total_rings: kv.u32("total_rings", d.total_rings, 0, u32::MAX),
+            total_coins: kv.u32("total_coins", d.total_coins, 0, u32::MAX),
         }
     }
 
@@ -44,7 +44,7 @@ impl Settings {
         kv.set("volume", self.volume);
         kv.set("fullscreen", self.fullscreen);
         kv.set("low_latency", self.low_latency);
-        kv.set("total_rings", self.total_rings);
+        kv.set("total_coins", self.total_coins);
         kv
     }
 
@@ -67,13 +67,13 @@ mod tests {
             volume: 0.3,
             fullscreen: false,
             low_latency: false,
-            total_rings: 42,
+            total_coins: 42,
         };
         assert_eq!(
             Settings::from_kv(&KeyValues::parse(&s.to_kv().to_text())),
             s
         );
-        let bad = Settings::from_kv(&KeyValues::parse("volume=7\ntotal_rings=abc\n"));
-        assert_eq!((bad.volume, bad.total_rings), (1.0, 0));
+        let bad = Settings::from_kv(&KeyValues::parse("volume=7\ntotal_coins=abc\n"));
+        assert_eq!((bad.volume, bad.total_coins), (1.0, 0));
     }
 }

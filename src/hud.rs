@@ -1,6 +1,6 @@
 //! Texte ueber dem Bild (virtuelle Flaeche, 720 hoch).
 
-use crate::game::{Game, Outcome, RINGS};
+use crate::game::{Game, Outcome, COINS};
 use mettgine::canvas::{Align, Canvas};
 
 const WHITE: [f32; 4] = [0.95, 0.95, 0.92, 1.0];
@@ -13,8 +13,8 @@ pub fn game(c: &mut Canvas, g: &Game) {
     let mid = c.w * 0.5;
     let time = format!("{:.0}", g.time_left.ceil());
     c.text_s(mid, 20.0, &time, 46.0, WHITE, Align::Center);
-    let rings = format!("{} / {RINGS}", g.collected);
-    c.text_s(mid, 72.0, &rings, 28.0, GOLD, Align::Center);
+    let coins = format!("{} / {COINS}", g.collected);
+    c.text_s(mid, 72.0, &coins, 28.0, GOLD, Align::Center);
 }
 
 /// Kopf eines Menues, dahinter abgedunkelt.
@@ -32,7 +32,7 @@ pub fn version(c: &mut Canvas) {
 
 pub fn result(o: Outcome) -> &'static str {
     match o {
-        Outcome::Won => "Alle Ringe gesammelt!",
+        Outcome::Won => "Alle Münzen gesammelt!",
         Outcome::Lost => "Die Zeit ist um.",
         Outcome::Running => "",
     }

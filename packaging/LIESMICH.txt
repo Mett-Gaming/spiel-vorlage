@@ -1,6 +1,6 @@
 MEIN SPIEL
 ==========
-Sammle alle Ringe, bevor die Zeit um ist.
+Sammle alle Münzen, bevor die Zeit um ist.
 
 STARTEN
   MEINSPIEL.exe doppelklicken. Keine Installation nötig.

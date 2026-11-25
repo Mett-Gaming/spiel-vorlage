@@ -1,4 +1,4 @@
-//! Spielregeln des Beispiels: eine Kugel sammelt Ringe, bevor die Zeit um ist. Keine Grafik, kein
+//! Spielregeln des Beispiels: eine Kugel sammelt Münzen, bevor die Zeit um ist. Keine Grafik, kein
 //! Ton, keine Eingabegeraete: So laesst sich alles testen. Hier faengt dein eigenes Spiel an.
 
 use glam::{vec2, Vec2};
@@ -8,11 +8,11 @@ use mettgine::random::Random;
 pub const STEP: f32 = 1.0 / 60.0;
 /// Halbe Kantenlaenge des Spielfelds (Meter)
 pub const FIELD: f32 = 10.0;
-/// Radius der Kugel und der Ringe (Meter)
+/// Radius der Kugel und der Münzen (Meter)
 pub const RADIUS: f32 = 0.5;
-pub const RING_RADIUS: f32 = 0.4;
-/// Ringe je Runde
-pub const RINGS: usize = 12;
+pub const COIN_RADIUS: f32 = 0.4;
+/// Münzen je Runde
+pub const COINS: usize = 12;
 /// Dauer einer Runde (Sekunden)
 pub const ROUND: f32 = 30.0;
 /// Beschleunigung (m/s^2) und Bremsen (1/s)
@@ -36,7 +36,7 @@ pub enum Outcome {
 /// Was in einem Schritt passiert ist (fuer Ton und Erfolge).
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Event {
-    Ring,
+    Coin,
     Won,
     Lost,
 }
@@ -46,7 +46,7 @@ pub enum Event {
 pub struct Game {
     pub pos: Vec2,
     pub vel: Vec2,
-    pub rings: Vec<Vec2>,
+    pub coins: Vec<Vec2>,
     pub collected: u32,
     pub time_left: f32,
     pub outcome: Outcome,
@@ -57,18 +57,18 @@ impl Game {
     pub fn new(seed: u64) -> Self {
         let mut rng = Random::new(seed);
         let edge = FIELD - 1.0;
-        let mut rings: Vec<Vec2> = Vec::new();
-        while rings.len() < RINGS {
+        let mut coins: Vec<Vec2> = Vec::new();
+        while coins.len() < COINS {
             let p = vec2(rng.range(-edge, edge), rng.range(-edge, edge));
             // nicht auf dem Start und nicht ineinander
-            if p.length() > 2.0 && rings.iter().all(|r| r.distance(p) > 1.5) {
-                rings.push(p);
+            if p.length() > 2.0 && coins.iter().all(|r| r.distance(p) > 1.5) {
+                coins.push(p);
             }
         }
         Self {
             pos: Vec2::ZERO,
             vel: Vec2::ZERO,
-            rings,
+            coins,
             collected: 0,
             time_left: ROUND,
             outcome: Outcome::Running,
@@ -94,16 +94,16 @@ impl Game {
         }
         self.pos = inside;
 
-        let before = self.rings.len();
+        let before = self.coins.len();
         let pos = self.pos;
-        self.rings
-            .retain(|r| r.distance(pos) > RADIUS + RING_RADIUS);
-        for _ in self.rings.len()..before {
+        self.coins
+            .retain(|r| r.distance(pos) > RADIUS + COIN_RADIUS);
+        for _ in self.coins.len()..before {
             self.collected += 1;
-            events.push(Event::Ring);
+            events.push(Event::Coin);
         }
         self.time_left = (self.time_left - STEP).max(0.0);
-        if self.rings.is_empty() {
+        if self.coins.is_empty() {
             self.outcome = Outcome::Won;
             events.push(Event::Won);
         } else if self.time_left <= 0.0 {
@@ -120,7 +120,7 @@ mod tests {
 
     fn towards(g: &Game) -> Input {
         let near = g
-            .rings
+            .coins
             .iter()
             .min_by(|a, b| a.distance(g.pos).total_cmp(&b.distance(g.pos)));
         Input {
@@ -130,26 +130,26 @@ mod tests {
 
     #[test]
     fn same_seed_gives_the_same_round() {
-        assert_eq!(Game::new(7).rings, Game::new(7).rings);
-        assert_ne!(Game::new(7).rings, Game::new(8).rings);
+        assert_eq!(Game::new(7).coins, Game::new(7).coins);
+        assert_ne!(Game::new(7).coins, Game::new(8).coins);
     }
 
     #[test]
     fn collecting_everything_wins_in_time() {
         for seed in 0..20 {
             let mut g = Game::new(seed);
-            let mut rings = 0;
+            let mut coins = 0;
             while g.outcome == Outcome::Running {
                 let input = towards(&g);
                 let events = g.update(&input);
-                rings += events.iter().filter(|e| **e == Event::Ring).count();
+                coins += events.iter().filter(|e| **e == Event::Coin).count();
             }
             assert_eq!(
                 g.outcome,
                 Outcome::Won,
                 "Runde {seed} ist nicht zu schaffen"
             );
-            assert_eq!(rings, RINGS);
+            assert_eq!(coins, COINS);
         }
     }
 

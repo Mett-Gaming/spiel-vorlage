@@ -7,7 +7,7 @@ An MEIN SPIEL arbeiten Menschen, die **keinen Code schreiben müssen**. Sie sage
 
 ## Erste Schritte
 - Gibt es noch `einrichten.ps1`, ist das Projekt noch die Vorlage. Titel und Kurzname von der Person erfragen und einmal ausführen: `powershell -ExecutionPolicy Bypass -File einrichten.ps1 -Titel "…" -Id …`. Danach prüfen (siehe 3.) und eintragen.
-- Das Beispiel (Kugel sammelt Ringe) wird Stück für Stück durch das eigene Spiel ersetzt. Erfolgs-Ids dürfen nur **vor** der ersten Veröffentlichung geändert werden.
+- Das Beispiel (Kugel sammelt Münzen) wird Stück für Stück durch das eigene Spiel ersetzt. Erfolgs-Ids dürfen nur **vor** der ersten Veröffentlichung geändert werden.
 - In den Launcher aufnehmen: `docs/launcher.md`.
 
 ## 1. Wer bestimmt

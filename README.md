@@ -1,6 +1,6 @@
 # Vorlage für neue Spiele
 
-Hiermit fängt ein neues Spiel für den [Mett Launcher](https://github.com/Mett-Gaming/mett-launcher) mit der Engine [Mettgine](https://github.com/Mett-Gaming/mettgine) an. Die Vorlage ist selbst ein kleines, spielbares Spiel (eine Kugel sammelt Ringe) und damit von der ersten Minute an lauffähig.
+Hiermit fängt ein neues Spiel für den [Mett Launcher](https://github.com/Mett-Gaming/mett-launcher) mit der Engine [Mettgine](https://github.com/Mett-Gaming/mettgine) an. Die Vorlage ist selbst ein kleines, spielbares Spiel (eine Kugel sammelt Münzen) und damit von der ersten Minute an lauffähig.
 
 ## Schon eingebaut
 - Fenster, randloses Vollbild, Menüs, Optionen, Pause, Tastatur, Maus und Controller
