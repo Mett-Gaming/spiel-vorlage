@@ -12,6 +12,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+[Console]::OutputEncoding = New-Object System.Text.UTF8Encoding($false)
 Set-Location $PSScriptRoot
 
 function Stop-Setup([string]$text) {
@@ -45,7 +46,7 @@ if ($known) {
     Invoke-Git submodule update --init mettgine
 } else {
     if (Test-Path 'mettgine') { Remove-Item 'mettgine' -Recurse -Force }
-    Remove-Item '.gitmodules' -ErrorAction SilentlyContinue
+    Invoke-Git rm -q -f --ignore-unmatch .gitmodules
     Invoke-Git submodule add -b main https://github.com/Mett-Gaming/mettgine.git mettgine
     Invoke-Git config -f .gitmodules submodule.mettgine.update merge
 }
